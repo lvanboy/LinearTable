@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+//è¯¥æ–‡ä»¶æ¥è‡ªä¸Šä¸Šçº§ç›®å½•æ–‡ä»¶
 #include "LinkList.h"
 #include "LinkStack.h"
 
-//°ü×°Êý¾Ý
+//åŒ…è£…æ•°æ®
 typedef struct _tag_LinkStack_{
 	LinkListNode node; 
 	void *value;
@@ -14,7 +15,7 @@ LinkStack *Create_LinkStack(){
 }
 
 void Destory_LinkStack(LinkStack *stack){
-	//ÏÈÇå¿Õ,ÔÙÏú»Ù
+	//å…ˆæ¸…ç©º,å†é”€æ¯
 	Clear_LinkStack(stack);
 	Destory_LinkList(stack);
 }
@@ -35,7 +36,7 @@ int Push(LinkStack *stack, void *item){
 		return 0;
 	}
 	container->value = item;
-	//¿ª¿ÚÏò×óµÄÕ»
+	//å¼€å£å‘å·¦çš„æ ˆ
 	if (Insert_LinkList(stack, (LinkListNode *)(&container->node), 0)){
 		//free(container);
 	}
@@ -51,7 +52,7 @@ void *Top(LinkStack *stack){
 }
 
 void *Pop(LinkStack *stack){
-	//µ¯³öÊ±,ÊÍ·Å¶ÑÉÏµÄ¿Õ¼ä
+	//å¼¹å‡ºæ—¶,é‡Šæ”¾å †ä¸Šçš„ç©ºé—´
 	TLinkStack *temp = (TLinkStack *)Delete_LinkListNode(stack, 0);
 	if (temp == NULL){
 		return NULL;
