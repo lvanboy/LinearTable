@@ -72,7 +72,7 @@ LinkListNode *Get_LinkListNode(LinkList *list, int pos){
 	if (ret == NULL){
 		return NULL;
 	}
-	if (pos < 0 || pos >= LinkList_Length(list)){
+	if (pos < 0 || pos > LinkList_Length(list)){
 		return NULL;
 	}
 	while (p->next != NULL && pos--){
