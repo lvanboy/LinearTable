@@ -25,7 +25,7 @@ SeqList *Create_SeqList(int capacity){
 }
 
 void Destory_SeqList(SeqList *list){
-	T_SeqList *ret = list;
+	T_SeqList *ret = (T_SeqList *)list;
 	if (ret == NULL){
 		return;
 	}
