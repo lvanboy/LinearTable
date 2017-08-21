@@ -4,14 +4,16 @@
 #include "LinkStack.h"
 
 
-//¹ıÂË¿Õ°×
-//ÈëÕ»: ÊÇ·ûºÅ(ÓÅÏÈ¼¶´óÓÚÕ»¶¥),×óÀ¨ºÅ
-//³öÕ»: Óöµ½ÓÒÀ¨ºÅ
-//ÏÈ³öºóÈë :µ±Ç°·ûºÅÓÅÏÈ¼¶Ğ¡ÓÚÕ»¶¥ÔªËØ
+//è¿‡æ»¤ç©ºç™½
+//æ•°å­—ç›´æ¥è¾“å‡º
+//ç¬¬ä¸€ä¸ªç¬¦å·ç›´æ¥å…¥æ ˆ,æ— éœ€æ¯”è¾ƒ
+//å…¥æ ˆ: é‡åˆ°ç¬¦å·(ä¼˜å…ˆçº§å¤§äºæ ˆé¡¶),å·¦æ‹¬å·
+//å‡ºæ ˆ: é‡åˆ°å³æ‹¬å·(ä¸€ç›´å‡ºæ ˆ,é‡åˆ°å·¦æ‹¬å·ä¸ºæ­¢,å·¦æ‹¬å·ä¹Ÿå¾—å¼¹å‡º)
+//å…ˆå‡ºåå…¥ :å½“å‰ç¬¦å·ä¼˜å…ˆçº§å°äºæ ˆé¡¶å…ƒç´ 
 //test:
 //5 + 4=> 5 4 +
 //1 + 2 * 3 = > 1 2 3 * +
-//8 + (3 ¨C 1) * 5 = > 8 3 1 ¨C 5 * +
+//8 + (3 â€“ 1) * 5 = > 8 3 1 â€“ 5 * +
 
 int Suffix2Result(LinkStack *stack,char *suffix);
 int Get_priority(char sign){
@@ -32,33 +34,33 @@ int Get_priority(char sign){
 }
 char suffix[1024] = { 0 };
 char *Infix2Suffix(LinkStack *stack ,char *exp){
-	//±éÀúÕû¸ö×Ö·û´®
+	//éå†æ•´ä¸ªå­—ç¬¦ä¸²
 	char *head = exp;
 	
 	int index = 0;
 	char num = '0';
 	while (*head){
-		//num ÊÇ×Ö·û±äÁ¿  ,numµÄµØÖ·ÊÇ²»µÈÓÚheadµÄ,ËûÃÇÖ»ÊÇÖµÏàµÈ
-		//ÈëÕ»ÓÃµØÖ·,±È½ÏÓÃÖµ,ÕâÀïcopyÒ»·İÖµ
+		//num æ˜¯å­—ç¬¦å˜é‡  ,numçš„åœ°å€æ˜¯ä¸ç­‰äºheadçš„,ä»–ä»¬åªæ˜¯å€¼ç›¸ç­‰
+		//å…¥æ ˆç”¨åœ°å€,æ¯”è¾ƒç”¨å€¼,è¿™é‡Œcopyä¸€ä»½å€¼
 		num = *head;
 		//filter the blank
 		if (num == ' '){
 			head++;
 			continue;
 		}
-		//×Ö·ûÊı×ÖÖ±½ÓÊä³ö
+		//å­—ç¬¦æ•°å­—ç›´æ¥è¾“å‡º
 		if (num >= '0' && num <= '9'){
 			suffix[index] = num;
 			index++;
 		}
-		//·ûºÅÇé¿ö
+		//ç¬¦å·æƒ…å†µ
 		else{
-			//µÚÒ»¸ö·ûºÅÖ±½ÓÈëÕ»
+			//ç¬¬ä¸€ä¸ªç¬¦å·ç›´æ¥å…¥æ ˆ
 			if (Get_Length(stack) == 0){
 				Push(stack, head);
 			}
 			else{
-				//Óöµ½ÓÒÀ¨ºÅ ,°ÑËüºÍ×óÀ¨ºÅÖ®¼äµÄ·ûºÅÈ«²¿µ¯³ö
+				//é‡åˆ°å³æ‹¬å· ,æŠŠå®ƒå’Œå·¦æ‹¬å·ä¹‹é—´çš„ç¬¦å·å…¨éƒ¨å¼¹å‡º
 				char *temp = (char *)Top(stack);
 				if (num == ')'){
 					
@@ -70,15 +72,15 @@ char *Infix2Suffix(LinkStack *stack ,char *exp){
 					}
 					Pop(stack);
 				}
-				//×óÀ¨ºÅÖ±½ÓÈëÕ»
+				//å·¦æ‹¬å·ç›´æ¥å…¥æ ˆ
 				else if (num == '('){
 					Push(stack, head);
 				}
-				//µ±Ç°×Ö·û´óÓÚÕ»¶¥ ,Ö±½ÓÈëÕ»
+				//å½“å‰å­—ç¬¦å¤§äºæ ˆé¡¶ ,ç›´æ¥å…¥æ ˆ
 				else if (Get_priority(num) >= Get_priority(*temp)){
 					Push(stack, head);
 				}
-				//in turn , ÏÈ³öºóÈë
+				//in turn , å…ˆå‡ºåå…¥
 				else{
 					char *top = (char *)Pop(stack);
 					suffix[index] = *top;
@@ -87,11 +89,11 @@ char *Infix2Suffix(LinkStack *stack ,char *exp){
 				}
 			}
 		}
-	//²»ÄÜÔÚÕâÀïºÍheadÍ¬²½++,ÒòÎªhead++Ö¸ÕëÒÆ¶¯,ÀïÃæ°üº¬ÁËÈëÕ»²Ù×÷ÊÇÃ»ÓĞÖµµÄ.
+	//ä¸èƒ½åœ¨è¿™é‡Œå’ŒheadåŒæ­¥++,å› ä¸ºhead++æŒ‡é’ˆç§»åŠ¨,é‡Œé¢åŒ…å«äº†å…¥æ ˆæ“ä½œæ˜¯æ²¡æœ‰å€¼çš„.
 	//	index++;
 		head++;
 	}
-	//Õ»ÄÚ·ûºÅÈ«²¿µ¯³ö
+	//æ ˆå†…ç¬¦å·å…¨éƒ¨å¼¹å‡º
 	while (Get_Length(stack) > 0){
 		char *top = (char *)Top(stack);
 		suffix[index] = *top;
@@ -99,7 +101,7 @@ char *Infix2Suffix(LinkStack *stack ,char *exp){
 		Pop(stack);
 	}
 
-	//´æ´¢µÄºó×º±í´ïÊ½
+	//å­˜å‚¨çš„åç¼€è¡¨è¾¾å¼
 	for (int i = 0; i < index; i++){
 		printf(" %c", suffix[i]);
 	}
@@ -113,7 +115,7 @@ int main(){
 	float result = 0;
 	suffix = Infix2Suffix(stack, "8 + ( 3 - 1 ) * 5");
 	result = Suffix2Result(stack, suffix);
-	printf("the result of 8 + ( 3 ¨C 1 ) * 5 is %f", result);
+	printf("the result of 8 + ( 3 â€“ 1 ) * 5 is %f", result);
 	getchar();
 	return 0;
 }
