@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include "LinkList.h"
 #include "LinkStack.h"
+//ç®—æ³•æ ¸å¿ƒ
+//æ•°å­—ç›´æ¥å…¥æ ˆ
+//é‡åˆ°ç¬¦å·,å…ˆå¼¹å‡ºå³æ“ä½œæ•°,å†å¼¹å‡ºå·¦æ“ä½œæ•°
+//åŒ¹é…ç¬¦å·,è¿›è¡Œè¿ç®—
+//ç»“æœå†æ¬¡å…¥æ ˆ
+
 float addition(float left, float right){
 	return left + right;
 }
@@ -54,7 +60,7 @@ int Suffix2Result(LinkStack *stack,char *suffix){
 	float left = 0;
 	float right = 0;
 	float result = 0;
-	//¿ª±ÙÒ»Ğ©ÓĞĞ§µØÖ·,·½±ãÏÂÃæ½øĞĞ
+	//å¼€è¾Ÿä¸€äº›æœ‰æ•ˆåœ°å€,æ–¹ä¾¿ä¸‹é¢è¿›è¡Œ
 	float _num[12] = { 0 };
 	float _temp[12] = {0};
 	float *num = (float *)&_num;
@@ -62,7 +68,7 @@ int Suffix2Result(LinkStack *stack,char *suffix){
 
 	while (*head){
 		if(isNum(*head)){
-			//ÕâÀïÓÃÖ¸Õë,¶¨ÒåÒ»¸ö±äÁ¿µÄ,Ã¿´ÎpushµÄµØÖ·ÒâÒå,ÎÒÃÇÍ¨¹ıÖ¸Õë,·½±ãµØÖ·ÒÆ¶¯(¿ª±ÙÓĞĞ§µÄµØÖ·)
+			//è¿™é‡Œç”¨æŒ‡é’ˆ,å®šä¹‰ä¸€ä¸ªå˜é‡çš„,æ¯æ¬¡pushçš„åœ°å€ä¸€æ ·,æ‰€ä»¥æˆ‘ä»¬é€šè¿‡æŒ‡é’ˆ,æ–¹ä¾¿åœ°å€ç§»åŠ¨(å¼€è¾Ÿæœ‰æ•ˆçš„åœ°å€)
 			 *num= Char2Interge(*head);
 			Push(stack, num);
 			num++;
@@ -71,7 +77,7 @@ int Suffix2Result(LinkStack *stack,char *suffix){
 			right = *((float *)Pop(stack));
 			left = *((float *)Pop(stack));
 	
-			//ÕâÀïÒ²ºÍÉÏÃæÍ¬Àí
+			//è¿™é‡Œä¹Ÿå’Œä¸Šé¢åŒç†
 			*temp= Match_Sign(*head, left, right);
 			Push(stack, temp);
 			temp++;
